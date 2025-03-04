@@ -1,9 +1,9 @@
 # Data Processing Pipeline and Web Dashboard
 
+#### February 2025
+
 ### Key Skills: PostgreSQL, Apache Airflow, Docker, API, Flask, React
 
-
-### Screenshots: 
 
 ## React Web Dashboard:
 ![image](https://github.com/user-attachments/assets/e48518dd-25ac-46c2-b7c8-79f671aa1d28)
