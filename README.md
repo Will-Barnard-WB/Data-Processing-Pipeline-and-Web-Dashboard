@@ -14,7 +14,7 @@ This project demonstrates an end-to-end data pipeline cycle including data extra
 - **Database Management:** View and manage database records using DBeaver.
 - **Backend API:** Flask serves as the backend to expose APIs that read data from the PostgreSQL database.
 - **Frontend Dashboard:** React-based web dashboard visualizes the latest stock open and close prices for a selected ticker symbol (default: AAPL).
-- **Containerized Architecture:** Each component (Airflow, Flask API, React app, PostgreSQL) runs in its own Docker container for easy deployment and scalability.
+- **Containerized Architecture:** The project runs two Docker containers — one for the data processing pipeline (Airflow, PostgreSQL) and one for the web dashboard (Flask API, React app) — enabling easy deployment and scalability.
 
 ---
 
@@ -34,7 +34,7 @@ This project demonstrates an end-to-end data pipeline cycle including data extra
 1. **Data Extraction:** Airflow DAG fetches real-time stock prices using yfinance.
 2. **Data Storage:** The fetched data is cleaned and inserted into a PostgreSQL database.
 3. **Backend Service:** Flask API queries PostgreSQL for the latest stock data.
-4. **Frontend Dashboard:** React app fetches data from Flask API and displays summaries and trends.
+4. **Frontend Dashboard:** React app fetches data from Flask API and displays recent open/close prices.
 5. **Automation & Logging:** Airflow manages the workflow scheduling and provides detailed logs.
 
 ---
