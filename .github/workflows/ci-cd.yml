@@ -43,7 +43,7 @@ jobs:
       # Build frontend Docker container using CI/CD-friendly compose
       - name: Build frontend Docker container
         run: |
-          cd "Web-Dashboard"
+          cd "Web-Dashboard/flask-backend"
           docker compose build front_end
 
       # Lint frontend code
@@ -52,7 +52,7 @@ jobs:
           cd "Web-Dashboard/react-frontend"
           npm install eslint
           npx eslint .
-          
+
   docker-deploy:
     needs: [backend-build, frontend-build]
     runs-on: ubuntu-latest
