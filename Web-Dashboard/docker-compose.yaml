@@ -16,7 +16,7 @@ services:
 
 
   front_end:
-    build: ./react-frontend
+    build: .
     container_name: react-frontend
     ports:
       - "3030:3000"
