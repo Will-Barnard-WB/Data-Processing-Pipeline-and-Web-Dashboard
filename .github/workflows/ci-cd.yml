@@ -40,19 +40,19 @@ jobs:
         with:
           node-version: 18
 
-      # Build frontend Docker container
+      # Build frontend Docker container using CI/CD-friendly compose
       - name: Build frontend Docker container
         run: |
           cd "Web-Dashboard"
-          docker compose build
+          docker compose build front_end
 
       # Lint frontend code
       - name: Lint frontend code
         run: |
-          cd "Web-Dashboard"
+          cd "Web-Dashboard/react-frontend"
           npm install eslint
           npx eslint .
-
+          
   docker-deploy:
     needs: [backend-build, frontend-build]
     runs-on: ubuntu-latest
