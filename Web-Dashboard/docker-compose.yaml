@@ -1,35 +1,23 @@
+version: '3.8'
+
 services:
+  # Backend service (Flask)
   webpage_docker:
-    build: .
+    build:
+      context: ./flask_app
+      dockerfile: Dockerfile
     container_name: webpage_docker
     ports:
       - "5050:5000"
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
-      - DB_HOST=postgres  # This references the PostgreSQL service inside airflow_docker
-      - DB_NAME=postgres
-      - DB_USER=airflow
-      - DB_PASS=airflow
-    networks:
-      - airflow_docker_default  # Connect to Airflow's network
 
-
+  # Frontend service (React)
   front_end:
-    build: .
+    build:
+      context: ./react-frontend
+      dockerfile: Dockerfile
     container_name: react-frontend
     ports:
       - "3030:3000"
-    volumes:
-      - ./react-frontend:/app
-      - /app/node_modules
-    stdin_open: true
-    tty: true
-    depends_on:
-      - webpage_docker
-    networks:
-    - airflow_docker_default
-
-networks:
-  airflow_docker_default:
-    external: true  # This tells Docker to use the existing network
