@@ -21,12 +21,11 @@ default_args = {
     "retry_delay": timedelta(minutes=5),
 }
 
-# DAG definition
 with DAG(
     dag_id="dag_yfinance",
     default_args=default_args,
     start_date=datetime(2025, 2, 26, 10, 33, 0),
-    schedule_interval="* * * * *",  # Run every minute
+    schedule_interval="* * * * *",
     catchup=False,
 ) as dag:
 
@@ -39,24 +38,24 @@ with DAG(
     task1 = SQLExecuteQueryOperator(
         task_id="create_postgres_table",
         conn_id="postgres_localhost",
-        sql="""
-        CREATE TABLE IF NOT EXISTS stock_data (
-            dt TIMESTAMP,
-            stock_symbol VARCHAR,
-            open_price DOUBLE PRECISION,
-            close_price DOUBLE PRECISION,
-            PRIMARY KEY (dt, stock_symbol)
-        );
-        """,
+        sql=(
+            "CREATE TABLE IF NOT EXISTS stock_data ("
+            "dt TIMESTAMP, "
+            "stock_symbol VARCHAR, "
+            "open_price DOUBLE PRECISION, "
+            "close_price DOUBLE PRECISION, "
+            "PRIMARY KEY (dt, stock_symbol)"
+            ");"
+        ),
     )
 
     task2 = SQLExecuteQueryOperator(
         task_id="delete_stock_data_from_table",
         conn_id="postgres_localhost",
-        sql="""
-        DELETE FROM stock_data
-        WHERE dt = '{{ts}}' AND stock_symbol = 'AAPL';
-        """,
+        sql=(
+            "DELETE FROM stock_data "
+            "WHERE dt = '{{ts}}' AND stock_symbol = 'AAPL';"
+        ),
     )
 
     task3 = SQLExecuteQueryOperator(
@@ -80,7 +79,8 @@ with DAG(
             "WHERE dt IN ("
             "SELECT dt FROM stock_data "
             "WHERE stock_symbol = 'AAPL' "
-            "ORDER BY dt DESC OFFSET 10);"
+            "ORDER BY dt DESC OFFSET 10"
+            ");"
         ),
     )
 
