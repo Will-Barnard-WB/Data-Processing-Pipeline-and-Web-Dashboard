@@ -30,28 +30,29 @@ jobs:
           flake8 .
 
   frontend-build:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    # Build both frontend-related containers
-    - name: Build frontend containers
-      run: |
-        cd "Web-Dashboard"
-        docker compose build
+      # Build both frontend-related containers
+      - name: Build frontend containers
+        run: |
+          cd "Web-Dashboard"
+          docker compose build
 
-    # Lint frontend code
-    - name: Lint frontend code
-      run: |
-        cd "Web-Dashboard/react-frontend"
-        npm install eslint
-        npx eslint .
+      # Lint frontend code
+      - name: Lint frontend code
+        run: |
+          cd "Web-Dashboard/react-frontend"
+          npm install eslint
+          npx eslint .
+
 
 
   docker-deploy:
