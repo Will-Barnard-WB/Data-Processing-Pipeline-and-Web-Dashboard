@@ -62,29 +62,26 @@ with DAG(
     task3 = SQLExecuteQueryOperator(
         task_id="fetch_and_store_apple_stock_data",
         conn_id="postgres_localhost",
-        sql="""
-        INSERT INTO stock_data (dt, stock_symbol, open_price, close_price)
-        VALUES (
-            '{{ts}}',
-            'AAPL',
-            '{{task_instance.xcom_pull(task_ids="fetch_stock_data", key="current_open")}}',
-            '{{task_instance.xcom_pull(task_ids="fetch_stock_data", key="current_close")}}'
-        );
-        """,
+        sql=(
+            "INSERT INTO stock_data (dt, stock_symbol, open_price, close_price) "
+            "VALUES ('{{ts}}', 'AAPL', "
+            "'{{ task_instance.xcom_pull(task_ids=\"fetch_stock_data\", "
+            "key=\"current_open\") }}', "
+            "'{{ task_instance.xcom_pull(task_ids=\"fetch_stock_data\", "
+            "key=\"current_close\") }}');"
+        ),
     )
 
     task4 = SQLExecuteQueryOperator(
         task_id="delete_oldest_stock_data",
         conn_id="postgres_localhost",
-        sql="""
-        DELETE FROM stock_data
-        WHERE dt IN (
-            SELECT dt FROM stock_data
-            WHERE stock_symbol = 'AAPL'
-            ORDER BY dt DESC
-            OFFSET 10
-        );
-        """,
+        sql=(
+            "DELETE FROM stock_data "
+            "WHERE dt IN ("
+            "SELECT dt FROM stock_data "
+            "WHERE stock_symbol = 'AAPL' "
+            "ORDER BY dt DESC OFFSET 10);"
+        ),
     )
 
     fetch_task >> task1 >> task2 >> task3 >> task4
