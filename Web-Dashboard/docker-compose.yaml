@@ -1,6 +1,6 @@
 services:
   webpage_docker:
-    build: ./flask_app
+    build: .
     container_name: webpage_docker
     ports:
       - "5050:5000"
