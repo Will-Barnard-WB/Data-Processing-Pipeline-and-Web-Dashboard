@@ -19,7 +19,7 @@ jobs:
       - name: Build backend Docker container
         run: |
           cd "Data Processing Pipeline"
-          docker-compose build
+          docker compose build
 
       # Lint Python code
       - name: Lint Python code
@@ -43,7 +43,7 @@ jobs:
       - name: Build frontend Docker container
         run: |
           cd "Web-Dashboard"
-          docker-compose build
+          docker compose build
 
       # Lint frontend code
       - name: Lint frontend code
@@ -68,11 +68,11 @@ jobs:
       - name: Build and push backend
         run: |
           cd "Data Processing Pipeline"
-          docker-compose build
-          docker-compose push
+          docker compose build
+          docker compose push
 
       - name: Build and push frontend
         run: |
           cd "Web-Dashboard"
-          docker-compose build
-          docker-compose push
+          docker compose build
+          docker compose push
